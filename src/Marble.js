@@ -9,38 +9,22 @@ export default class Marble extends Component{
         super(props);
     }
 
-    renderEmptyMarble(){
-        return(
-            <img style={{ width: "75px" }} src={empty} alt="Empty"></img>
-        );
-    }
-    renderP1Marble(){
-        return(
-            <img style={{ width: "75px" }} src={p1} alt="Player One"></img>
-        );
-    }
-    renderP2Marble(){
-        return(
-            <img style={{ width: "75px" }} src={p2} alt="Player Two"></img>
-        );
-    }
-    renderHoverMarble(){
-        return(
-            <img style={{ width: "75px" }} src={hover} alt="Hover"></img>
-        );
-    }
     render(){
         var marbleStyle={
-            margin: "10px",
+            maxWidth: "50px",
+            // margin: "10%"
         };
-        if(this.props.type=="p1"){
-            return <img style={{ width: "75px" }} src={p1} alt="Player One"></img>;
-        } else if(this.props.type=="p2"){
-            return <img style={{ width: "75px" }} src={p2} alt="Player Two"></img>;
-        } else if(this.props.type=="empty"){
-            return <img style={{ width: "75px" }} src={empty} alt="Player Two"></img>;
-        } else if(this.props.type=="hover"){
-            return <img style={{ width: "75px" }} src={hover} alt="Player Two"></img>;
+
+        if(this.props.type=="1"){
+            return <img style={marbleStyle} src={p1} alt="Player One"></img>;
+        } else if(this.props.type=="2"){
+            return <img style={marbleStyle} src={p2} alt="Player Two"></img>;
+        } else if(this.props.type=="0"){
+            return <img style={marbleStyle} src={empty} alt="Empty"></img>;
+        } else if(this.props.type=="3"){
+            return <img style={marbleStyle} src={hover} alt="Hover"></img>;
+        } else {
+            return <img style={marbleStyle} src={empty} alt="Empty"></img>;
         }
     }
 }
