@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import Marble from './Marble';
-import p1 from './images/p1.png';
 
 export default class Player extends Component{
     constructor(props){
         super(props);
     }
+    
     render(){
         var playerStyle = {
             display: 'flex',

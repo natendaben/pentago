@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Quadrant from './Quadrant'
-import Marble from './Marble'
 
 export default class Board extends Component{
     constructor(props){
