@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import rotateLeft from './images/rotateLeft.png';
+import rotateRight from './images/rotateRight.png';
 import Marble from './Marble'
 
 // 
@@ -7,9 +9,72 @@ export default class Quadrant extends Component{
     constructor(props){
         super(props);
     }
-    render(){
-    	
 
-        return(<h1>Hello from quadrant file!</h1>)
+    render(){
+
+        var wrapperStyle = {
+            position: "relative",
+        }
+        var quadrantStyle = {
+            background: "#E56584",
+            margin: this.props.margin,
+            border: "3px solid black",
+            borderRadius: "10px",
+            display: 'grid',
+            gridTemplateColumns: "1fr 1fr 1fr",
+            gridTemplateRows: "1fr 1fr 1fr",
+            justifySelf: "center",
+            alignSelf: "center",
+            padding: "10px",
+        };
+        var rotateButtonStyle = {
+            position: "absolute",
+            zIndex: "10",
+            maxWidth: "55px",
+        };
+        var rotateLeftButtonStyle, rotateRightButtonStyle;
+        if(this.props.position == "topLeft"){
+            rotateLeftButtonStyle = {
+                top: "-25%",
+            }
+            rotateRightButtonStyle = {
+                left: "-25%",
+            }
+        } else if (this.props.position == "topRight"){
+            rotateLeftButtonStyle = {
+                top: "-25%",
+                right: "0%",
+            }
+            rotateRightButtonStyle = {
+                right: "-25%",
+            }
+        } else if (this.props.position == "bottomLeft"){
+            rotateLeftButtonStyle = {
+                bottom: "-25%",
+            }
+            rotateRightButtonStyle = {
+                left: "-25%",
+                bottom: "0%",
+            }
+        } else if (this.props.position == "bottomRight"){
+            rotateLeftButtonStyle = {
+                bottom: "-25%",
+                right: "0%",
+            }
+            rotateRightButtonStyle = {
+                right: "-25%",
+                bottom: "0%",
+            }
+        }
+        return(
+            <div style={wrapperStyle}>
+                <img style={{...rotateButtonStyle, ...rotateLeftButtonStyle}} src={rotateLeft} alt="Rotate left"></img>
+                <img style={{...rotateButtonStyle, ...rotateRightButtonStyle}} src={rotateRight} alt="Rotate right"></img>
+                <div style={quadrantStyle}>
+                    {this.props.dotArray.map(dot => <Marble type={dot.type} />)}
+                </div>
+            </div>
+        );
+
     }
 }
