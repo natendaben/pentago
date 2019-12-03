@@ -8,6 +8,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hello from app file!</h1>
+      <Board />
     </div>
   );
 }
