@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import rotateLeft from './images/rotateLeft.png';
 import rotateRight from './images/rotateRight.png';
+import leftHov from './images/leftHov.png';
+import rightHov from './images/rightHov.png';
 import Marble from './Marble'
 
 // 
@@ -8,6 +10,43 @@ import Marble from './Marble'
 export default class Quadrant extends Component{
     constructor(props){
         super(props);
+        this.state={
+            leftRotateImageSrc: rotateLeft,
+            rightRotateImageSrc: rotateRight,
+        };
+        this.handleLeftHover = this.handleLeftHover.bind(this);
+        this.handleLeftRestore = this.handleLeftRestore.bind(this);
+        this.handleRightHover = this.handleRightHover.bind(this);
+        this.handleRightRestore = this.handleRightRestore.bind(this);
+    }
+
+    handleLeftHover(){
+        if(this.state.leftRotateImageSrc == rotateLeft){
+            this.setState({
+                leftRotateImageSrc: leftHov,
+            });
+        }
+    }
+    handleLeftRestore(){
+        if(this.state.leftRotateImageSrc == leftHov){
+            this.setState({
+                leftRotateImageSrc: rotateLeft,
+            });
+        }
+    }
+    handleRightHover(){
+        if(this.state.rightRotateImageSrc == rotateRight){
+            this.setState({
+                rightRotateImageSrc: rightHov,
+            });
+        }
+    }
+    handleRightRestore(){
+        if(this.state.rightRotateImageSrc == rightHov){
+            this.setState({
+                rightRotateImageSrc: rotateRight,
+            });
+        }
     }
 
     render(){
@@ -68,8 +107,8 @@ export default class Quadrant extends Component{
         }
         return(
             <div style={wrapperStyle}>
-                <img style={{...rotateButtonStyle, ...rotateLeftButtonStyle}} src={rotateLeft} alt="Rotate left"></img>
-                <img style={{...rotateButtonStyle, ...rotateRightButtonStyle}} src={rotateRight} alt="Rotate right"></img>
+                <img style={{...rotateButtonStyle, ...rotateLeftButtonStyle}} src={this.state.leftRotateImageSrc} onMouseEnter={this.handleLeftHover} onMouseLeave={this.handleLeftRestore} alt="Rotate left"></img>
+                <img style={{...rotateButtonStyle, ...rotateRightButtonStyle}} src={this.state.rightRotateImageSrc} onMouseEnter={this.handleRightHover} onMouseLeave={this.handleRightRestore} alt="Rotate right"></img>
                 <div style={quadrantStyle}>
                     {this.props.dotArray.map(dot => <Marble type={dot.type} />)}
                 </div>

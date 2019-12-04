@@ -7,6 +7,40 @@ import hover from './images/hover.png';
 export default class Marble extends Component{
     constructor(props){
         super(props);
+        if(this.props.type=="0"){
+            this.state={
+                imageSource: empty,
+            }
+        } else if(this.props.type=="1"){
+            this.state={
+                imageSource: p1,
+            }
+        } else if(this.props.type=="2"){
+            this.state={
+                imageSource: p2,
+            }
+        } else { //default
+            this.state={
+                imageSource: empty,
+            }
+        }
+        this.handleHover = this.handleHover.bind(this);
+        this.handleRestore = this.handleRestore.bind(this);
+    }
+
+    handleHover(){
+        if(this.state.imageSource == empty){
+            this.setState({
+                imageSource: hover,
+            });
+        }
+    }
+    handleRestore(){
+        if(this.state.imageSource == hover){
+            this.setState({
+                imageSource: empty,
+            });
+        }
     }
 
     render(){
@@ -14,17 +48,6 @@ export default class Marble extends Component{
             maxWidth: "50px",
             // margin: "10%"
         };
-
-        if(this.props.type=="1"){
-            return <img style={marbleStyle} src={p1} alt="Player One"></img>;
-        } else if(this.props.type=="2"){
-            return <img style={marbleStyle} src={p2} alt="Player Two"></img>;
-        } else if(this.props.type=="0"){
-            return <img style={marbleStyle} src={empty} alt="Empty"></img>;
-        } else if(this.props.type=="3"){
-            return <img style={marbleStyle} src={hover} alt="Hover"></img>;
-        } else {
-            return <img style={marbleStyle} src={empty} alt="Empty"></img>;
-        }
+        return <img style={marbleStyle} src={this.state.imageSource} alt="Marble" onMouseEnter={this.handleHover} onMouseLeave={this.handleRestore}></img>;
     }
 }
