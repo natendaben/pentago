@@ -7,11 +7,113 @@ export default class App extends Component{
   constructor(props){
     super(props);
     this.state = {
-        tlQuad: Array(9).fill({type: "0"}),
-        trQuad: Array(9).fill({type: "1"}),
-        blQuad: Array(9).fill({type: "2"}),
-        brQuad: Array(9).fill({type: "3"}),
+        arrays: [
+          [
+            {type: "0", id: 0},
+            {type: "0", id: 1},
+            {type: "0", id: 2},
+            {type: "0", id: 3},
+            {type: "0", id: 4},
+            {type: "0", id: 5},
+            {type: "0", id: 6},
+            {type: "0", id: 7},
+            {type: "0", id: 8},
+          ],
+          [
+            {type: "0", id: 0},
+            {type: "0", id: 1},
+            {type: "0", id: 2},
+            {type: "0", id: 3},
+            {type: "0", id: 4},
+            {type: "0", id: 5},
+            {type: "0", id: 6},
+            {type: "0", id: 7},
+            {type: "0", id: 8},
+          ],
+          [
+            {type: "0", id: 0},
+            {type: "0", id: 1},
+            {type: "0", id: 2},
+            {type: "0", id: 3},
+            {type: "0", id: 4},
+            {type: "0", id: 5},
+            {type: "0", id: 6},
+            {type: "0", id: 7},
+            {type: "0", id: 8},
+          ],
+          [
+            {type: "0", id: 0},
+            {type: "0", id: 1},
+            {type: "0", id: 2},
+            {type: "0", id: 3},
+            {type: "0", id: 4},
+            {type: "0", id: 5},
+            {type: "0", id: 6},
+            {type: "0", id: 7},
+            {type: "0", id: 8},
+          ]
+        ],
+
+        player1name: "Player 1",
+        player2name: "Player 2",
+
+        instructionText: "Black, your turn first",
+        player1turn: true,
+        timeToPlaceMarble: true,
+        timeToRotateQuadrant: false,
+        winnerExists: false,
     };
+    this.updatePlayer1Name = this.updatePlayer1Name.bind(this);
+    this.updatePlayer2Name = this.updatePlayer2Name.bind(this);
+    this.marblePlacedInQuad = this.marblePlacedInQuad.bind(this);
+  }
+
+  marblePlacedInQuad(marbleId, quadrantId){
+    let bigArray = [...this.state.arrays]; //copy arrays from state
+    let quadArray = bigArray[quadrantId];
+    let changedMarble = {...quadArray[marbleId]};
+    if(this.state.player1turn){
+      changedMarble.type = '1';
+    } else {
+      changedMarble.type = '2';
+    }
+    quadArray[marbleId] = changedMarble;
+    bigArray[quadrantId] = quadArray;
+    this.setState({arrays: bigArray});
+    this.setState({
+      player1turn: !this.state.player1turn,
+    });
+    if(this.state.player1turn){
+      this.setState({
+        instructionText: this.state.player2name + ", your turn",
+      });
+    } else {
+      this.setState({
+        instructionText: this.state.player1name + ", your turn",
+      });
+    }
+  }
+
+  //UPDATE PLAYER NAMES
+  updatePlayer1Name(event){
+    this.setState({
+      player1name: event.target.value,
+    });
+    if(this.state.player1turn){
+      this.setState({
+        instructionText: event.target.value + ", your turn"
+      });
+    }
+  }
+  updatePlayer2Name(event){
+    this.setState({
+      player2name: event.target.value,
+    });
+    if(!this.state.player1turn){
+      this.setState({
+        instructionText: event.target.value + ", your turn"
+      });
+    }
   }
 
   render(){
@@ -56,20 +158,19 @@ export default class App extends Component{
     };
 
     return (
-    
       <div style={flexLayout}>
         <h1 style={headingStyle}>PENTAGO</h1>
         <div style={gridLayout}>
-          <Player name="Nate" player='1'/>
+          <Player name={this.state.player1name} player='1' nameChange={this.updatePlayer1Name}/>
           <div style={boardStyle}>
-                <Quadrant dotArray={this.state.tlQuad} position="topLeft" margin="0% 2.5% 2.5% 0%"/>
-                <Quadrant dotArray={this.state.trQuad} position="topRight" margin="0% 0% 2.5% 2.5%"/>
-                <Quadrant dotArray={this.state.blQuad} position="bottomLeft" margin="2.5% 2.5% 0% 0%"/>
-                <Quadrant dotArray={this.state.brQuad} position="bottomRight" margin="2.5% 0% 0% 2.5%"/>
-            </div>
-          <Player name="Elsa" player='2'/>
+                <Quadrant dotArray={this.state.arrays[0]} id={0} position="topLeft" margin="0% 2.5% 2.5% 0%" onPlaceMarble={this.marblePlacedInQuad} />
+                <Quadrant dotArray={this.state.arrays[1]} id={1} position="topRight" margin="0% 0% 2.5% 2.5%" onPlaceMarble={this.marblePlacedInQuad} />
+                <Quadrant dotArray={this.state.arrays[2]} id={2} position="bottomLeft" margin="2.5% 2.5% 0% 0%" onPlaceMarble={this.marblePlacedInQuad} />
+                <Quadrant dotArray={this.state.arrays[3]} id={3} position="bottomRight" margin="2.5% 0% 0% 2.5%" onPlaceMarble={this.marblePlacedInQuad} />
+          </div>
+          <Player name={this.state.player2name} player='2' nameChange={this.updatePlayer2Name}/>
         </div>
-        <h2 style={heading2Style}>Elsa, it is your turn!</h2>
+        <h2 style={heading2Style}>{this.state.instructionText}</h2>
   
       </div>
     );

@@ -18,8 +18,10 @@ export default class Quadrant extends Component{
         this.handleLeftRestore = this.handleLeftRestore.bind(this);
         this.handleRightHover = this.handleRightHover.bind(this);
         this.handleRightRestore = this.handleRightRestore.bind(this);
+        this.placeMarble = this.placeMarble.bind(this);
     }
 
+    //HOVER EFFECTS FOR ROTATE BUTTONS
     handleLeftHover(){
         if(this.state.leftRotateImageSrc == rotateLeft){
             this.setState({
@@ -47,6 +49,10 @@ export default class Quadrant extends Component{
                 rightRotateImageSrc: rotateRight,
             });
         }
+    }
+
+    placeMarble(marbleId){
+        this.props.onPlaceMarble(marbleId, this.props.id);
     }
 
     render(){
@@ -110,7 +116,7 @@ export default class Quadrant extends Component{
                 <img style={{...rotateButtonStyle, ...rotateLeftButtonStyle}} src={this.state.leftRotateImageSrc} onMouseEnter={this.handleLeftHover} onMouseLeave={this.handleLeftRestore} alt="Rotate left"></img>
                 <img style={{...rotateButtonStyle, ...rotateRightButtonStyle}} src={this.state.rightRotateImageSrc} onMouseEnter={this.handleRightHover} onMouseLeave={this.handleRightRestore} alt="Rotate right"></img>
                 <div style={quadrantStyle}>
-                    {this.props.dotArray.map(dot => <Marble type={dot.type} />)}
+                    {this.props.dotArray.map(dot => <Marble key={dot.id} id={dot.id} type={dot.type} onPlaceMarble={this.placeMarble}/>)}
                 </div>
             </div>
         );

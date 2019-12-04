@@ -22,11 +22,13 @@ export default class Player extends Component{
             fontSize: "200%",
             fontWeight: "700",
             margin: "1% 0% 1% 0%",
+            textAlign: "center",
+            width: "80%",
         }
         if(this.props.player=='1'){
             return(
                 <div style={playerStyle}>
-                    <h2 style={heading2Style}>{this.props.name}</h2>
+                    <input style={heading2Style} value={this.props.name} onChange={this.props.nameChange}></input>
                     <div style={marbleArsenalStyle}>
                         <Marble type="1"/>
                         <Marble type="1"/>
@@ -50,7 +52,7 @@ export default class Player extends Component{
         } else if(this.props.player=='2'){
             return(
                 <div style={playerStyle}>
-                    <h2 style={heading2Style}>{this.props.name}</h2>
+                    <input style={heading2Style} value={this.props.name} onChange={this.props.nameChange}></input>
                     <div style={marbleArsenalStyle}>
                         <Marble type="2"/>
                         <Marble type="2"/>
