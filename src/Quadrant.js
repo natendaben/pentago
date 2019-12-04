@@ -14,6 +14,8 @@ export default class Quadrant extends Component{
             leftRotateImageSrc: rotateLeft,
             rightRotateImageSrc: rotateRight,
         };
+        
+        // BINDING HELPER FUNCTIONS
         this.handleLeftHover = this.handleLeftHover.bind(this);
         this.handleLeftRestore = this.handleLeftRestore.bind(this);
         this.handleRightHover = this.handleRightHover.bind(this);
@@ -21,7 +23,7 @@ export default class Quadrant extends Component{
         this.placeMarble = this.placeMarble.bind(this);
     }
 
-    //HOVER EFFECTS FOR ROTATE BUTTONS
+    // HOVER EFFECTS FOR ROTATE BUTTONS
     handleLeftHover(){
         if(this.state.leftRotateImageSrc == rotateLeft){
             this.setState({
@@ -51,12 +53,13 @@ export default class Quadrant extends Component{
         }
     }
 
+    // PLACE MARBLE FUNCTION
+    // called from marble, but Quadrant adds its id and sends back to App
     placeMarble(marbleId){
         this.props.onPlaceMarble(marbleId, this.props.id);
     }
 
     render(){
-
         var wrapperStyle = {
             position: "relative",
         }
@@ -77,6 +80,8 @@ export default class Quadrant extends Component{
             zIndex: "10",
             maxWidth: "55px",
         };
+
+        // STYLING FOR BUTTON PLACEMENT
         var rotateLeftButtonStyle, rotateRightButtonStyle;
         if(this.props.position == "topLeft"){
             rotateLeftButtonStyle = {

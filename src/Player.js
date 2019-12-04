@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import Marble from './Marble';
 
-export default class Player extends Component{
-    constructor(props){
-        super(props);
-    }
-    
+export default class Player extends Component{    
     render(){
         var playerStyle = {
             display: 'flex',

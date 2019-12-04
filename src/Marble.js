@@ -24,13 +24,15 @@ export default class Marble extends Component{
                 imageSource: empty,
             }
         }
+
+        // BINDING HELPER FUNCTIONS
         this.handleHover = this.handleHover.bind(this);
         this.handleRestore = this.handleRestore.bind(this);
         this.placeMarble = this.placeMarble.bind(this);
         this.checkForState = this.checkForState.bind(this);
     }
 
-    //HOVER EFFECTS FOR EMPTY SPACES
+    // HOVER EFFECTS FOR EMPTY SPACES
     handleHover(){
         if(this.state.imageSource == empty){
             this.setState({
@@ -46,15 +48,18 @@ export default class Marble extends Component{
         }
     }
 
+
     placeMarble(){
-        if(this.state.imageSource == hover){
-            this.props.onPlaceMarble(this.props.id);
-            setTimeout(this.checkForState, 5); //otherwise props doesn't update clickly enough
+        if(this.state.imageSource == hover){ //if marble space hasn't been taken yet
+            this.props.onPlaceMarble(this.props.id); //call placeMarble function in Quadrant
+            setTimeout(this.checkForState, 5); //delay, otherwise props doesn't update quickly enough and user has to click twice
         } else {
-            //do nothing
+            //do nothing, a valid marble space was not clicked
         }
     }
 
+    // GET MARBLES TO RE-RENDER AFTER BEING PLACED
+    // called from placeMarble
     checkForState(){
         if(this.props.type=="1"){
             this.setState({
@@ -70,7 +75,6 @@ export default class Marble extends Component{
     render(){
         var marbleStyle={
             maxWidth: "50px",
-            // margin: "10%"
         };
         return <img style={marbleStyle} src={this.state.imageSource} alt="Marble" onMouseEnter={this.handleHover} onMouseLeave={this.handleRestore} onClick={this.placeMarble}></img>;
     }
