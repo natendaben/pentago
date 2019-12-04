@@ -3,6 +3,11 @@ import './App.css';
 import Quadrant from './Quadrant'
 import Player from './Player'
 
+import p1 from './images/p1.png';
+import p2 from './images/p2.png';
+import empty from './images/empty.png';
+import hover from './images/hover.png';
+
 export default class App extends Component{
   constructor(props){
     super(props);
@@ -114,6 +119,9 @@ export default class App extends Component{
     this.updatePlayer2Name = this.updatePlayer2Name.bind(this);
     this.marblePlaced = this.marblePlaced.bind(this);
     this.removePlayerMarble = this.removePlayerMarble.bind(this);
+
+    this.rotateQuadrant = this.rotateQuadrant.bind(this);
+   // this.checkForState2 = this.checkForState2.bind(this);
   }
 
   // THE BIG KAHUNA - RUNS WHEN MARBLE IS PLACED ON BOARD
@@ -183,11 +191,97 @@ export default class App extends Component{
   // called when rotate button is pushed 
   // passed to each quadrant as props
   rotateQuadrant(quadrantId, rotationDirection){
-    //feel free to change those parameters
-    //do stuff
+    //get given quadrant and rotation direction
+    // get state of every Marble in the array
 
-    //eventually call calculateWinner at the end
+   // let direction = rotationDirection.id;
+    let bigArray = [...this.state.masterQuadArray]; 
+    let quadArray = bigArray[quadrantId];
+
+    let new0Marble = {...quadArray[0]}; //Extract desired marble from quadrant array
+    let new1Marble = {...quadArray[1]}; //Extract desired marble from quadrant array
+    let new2Marble = {...quadArray[2]}; //Extract desired marble from quadrant array
+    let new3Marble = {...quadArray[3]}; //Extract desired marble from quadrant array
+    let new4Marble = {...quadArray[4]}; //Extract desired marble from quadrant array
+    let new5Marble = {...quadArray[5]}; //Extract desired marble from quadrant array
+    let new6Marble = {...quadArray[6]}; //Extract desired marble from quadrant array
+    let new7Marble = {...quadArray[7]}; //Extract desired marble from quadrant array
+    let new8Marble = {...quadArray[8]}; //Extract desired marble from quadrant array
+
+    let temp0state = new0Marble.type;
+    let temp1state = new1Marble.type;
+    let temp2state = new2Marble.type;
+    let temp3state = new3Marble.type;
+    let temp4state = new4Marble.type;
+    let temp5state = new5Marble.type;
+    let temp6state = new6Marble.type;
+    let temp7state = new7Marble.type;
+    let temp8state = new8Marble.type;
+
+    if(rotationDirection == "0"){ // ROTATE COUNTER CLOCKWISE
+    	// replace marble state with that of the marble that rotates into its spot
+    	// 0 --> 6
+    	quadArray[0].type = temp6state;
+    	// 1 --> 3
+    	quadArray[1].type = temp3state;
+    	// 2 --> 0
+    	quadArray[2].type = temp0state;
+    	// 3 --> 7
+    	quadArray[3].type = temp7state;
+    	// 4 --> 4
+    	quadArray[4].type = temp4state;
+    	// 5 --> 1
+    	quadArray[5].type = temp1state;
+    	// 6 --> 8
+    	quadArray[6].type = temp8state;
+    	// 7 --> 5
+    	quadArray[7].type = temp5state;
+    	// 8 -->  2
+    	quadArray[8].type = temp2state;
+   
+    } else if(rotationDirection){ // ROTATE CLOCKWISE
+    	// replace marble state with that of the marble that rotates into its spot
+    	// 0 --> 2
+    	quadArray[0].type = temp2state;
+    	// 1 --> 5
+    	quadArray[1].type = temp5state;
+    	// 2 --> 8
+    	quadArray[2].type = temp8state;
+    	// 3 --> 1
+    	quadArray[3].type = temp1state;
+    	// 4 --> 4
+    	quadArray[4].type = temp4state;
+    	// 5 --> 7
+    	quadArray[5].type = temp7state;
+    	// 6 --> 0
+    	quadArray[6].type = temp0state;
+    	// 7 --> 3
+    	quadArray[7].type = temp3state;
+    	// 8 --> 6
+    	quadArray[8].type = temp6state;
+
+    }
+    //setTimeout(this.checkForState2, 5);
+    // call calculateWinner at the end
   }
+
+    // GET MARBLES TO RE-RENDER AFTER BEING ROTATED
+    // called from rotateQuadrant
+    // checkForState2(){
+    //     if(this.props.type=="1"){
+    //         this.setState({
+    //             imageSource: p1,
+    //         });
+    //     } else if(this.props.type=="2"){
+    //         this.setState({
+    //             imageSource: p2,
+    //         })
+    //     } else{
+    //     	this.setState({
+    //     		imageSource: empty,
+    //     	})
+    //     }
+    // }
 
   // CALCULATE WINNER FUNCTION
   // called at the end of rotateQuadrant
@@ -242,10 +336,10 @@ export default class App extends Component{
         <div style={gridLayout}>
           <Player name={this.state.player1name} player='1' pieces={this.state.playerArrays[0]} nameChange={this.updatePlayer1Name}/>
           <div style={boardStyle}>
-                <Quadrant dotArray={this.state.masterQuadArray[0]} id={0} position="topLeft" margin="0% 2.5% 2.5% 0%" onPlaceMarble={this.marblePlaced} />
-                <Quadrant dotArray={this.state.masterQuadArray[1]} id={1} position="topRight" margin="0% 0% 2.5% 2.5%" onPlaceMarble={this.marblePlaced} />
-                <Quadrant dotArray={this.state.masterQuadArray[2]} id={2} position="bottomLeft" margin="2.5% 2.5% 0% 0%" onPlaceMarble={this.marblePlaced} />
-                <Quadrant dotArray={this.state.masterQuadArray[3]} id={3} position="bottomRight" margin="2.5% 0% 0% 2.5%" onPlaceMarble={this.marblePlaced} />
+                <Quadrant dotArray={this.state.masterQuadArray[0]} id={0} position="topLeft" margin="0% 2.5% 2.5% 0%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                <Quadrant dotArray={this.state.masterQuadArray[1]} id={1} position="topRight" margin="0% 0% 2.5% 2.5%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                <Quadrant dotArray={this.state.masterQuadArray[2]} id={2} position="bottomLeft" margin="2.5% 2.5% 0% 0%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                <Quadrant dotArray={this.state.masterQuadArray[3]} id={3} position="bottomRight" margin="2.5% 0% 0% 2.5%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
           </div>
           <Player name={this.state.player2name} player='2' pieces={this.state.playerArrays[1]} nameChange={this.updatePlayer2Name}/>
         </div>

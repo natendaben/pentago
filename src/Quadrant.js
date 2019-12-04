@@ -21,6 +21,8 @@ export default class Quadrant extends Component{
         this.handleRightHover = this.handleRightHover.bind(this);
         this.handleRightRestore = this.handleRightRestore.bind(this);
         this.placeMarble = this.placeMarble.bind(this);
+        this.handleLeftRotate = this.handleLeftRotate.bind(this);
+        this.handleRightRotate  = this.handleRightRotate.bind(this);
     }
 
     // HOVER EFFECTS FOR ROTATE BUTTONS
@@ -57,6 +59,13 @@ export default class Quadrant extends Component{
     // called from marble, but Quadrant adds its id and sends back to App
     placeMarble(marbleId){
         this.props.onPlaceMarble(marbleId, this.props.id);
+    }
+
+    handleLeftRotate(){
+    	this.props.rotateQuadrant(this.props.id, 0);
+    }
+    handleRightRotate(){
+    	this.props.rotateQuadrant(this.props.id, 1);
     }
 
     render(){
@@ -118,8 +127,8 @@ export default class Quadrant extends Component{
         }
         return(
             <div style={wrapperStyle}>
-                <img style={{...rotateButtonStyle, ...rotateLeftButtonStyle}} src={this.state.leftRotateImageSrc} onMouseEnter={this.handleLeftHover} onMouseLeave={this.handleLeftRestore} alt="Rotate left"></img>
-                <img style={{...rotateButtonStyle, ...rotateRightButtonStyle}} src={this.state.rightRotateImageSrc} onMouseEnter={this.handleRightHover} onMouseLeave={this.handleRightRestore} alt="Rotate right"></img>
+                <img id="0" style={{...rotateButtonStyle, ...rotateLeftButtonStyle}} src={this.state.leftRotateImageSrc} onMouseEnter={this.handleLeftHover} onMouseLeave={this.handleLeftRestore} onClick={this.handleRightRotate} alt="Rotate left"></img>
+                <img id="1" style={{...rotateButtonStyle, ...rotateRightButtonStyle}} src={this.state.rightRotateImageSrc} onMouseEnter={this.handleRightHover} onMouseLeave={this.handleRightRestore} onClick={this.handleLeftRotate} alt="Rotate right"></img>
                 <div style={quadrantStyle}>
                     {this.props.dotArray.map(dot => <Marble key={dot.id} id={dot.id} type={dot.type} onPlaceMarble={this.placeMarble}/>)}
                 </div>
