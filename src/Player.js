@@ -25,66 +25,13 @@ export default class Player extends Component{
             textAlign: "center",
             width: "80%",
         }
-        if(this.props.player=='1'){
-            return(
-                <div style={playerStyle}>
-                    <input style={heading2Style} value={this.props.name} onChange={this.props.nameChange}></input>
-                    <div style={marbleArsenalStyle}>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                        <Marble type="1"/>
-                    </div>
-                </div>
-            );
-        } else if(this.props.player=='2'){
-            return(
-                <div style={playerStyle}>
-                    <input style={heading2Style} value={this.props.name} onChange={this.props.nameChange}></input>
-                    <div style={marbleArsenalStyle}>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                        <Marble type="2"/>
-                    </div>
-                </div>
-            );
-        }
         return(
-        <div style={playerStyle}>
-            <h1>{this.props.name}</h1>
-            <div style={marbleArsenalStyle}>
-                <Marble type="p1"/>
-                <Marble type="p2"/>
-                <Marble type="empty"/>
-                <Marble type="empty"/>
-                <Marble type="hover"/>
+            <div style={playerStyle}>
+                <input style={heading2Style} value={this.props.name} onChange={this.props.nameChange}></input>
+                <div style={marbleArsenalStyle}>
+                    {this.props.pieces.map(piece => <Marble key={piece.id} id={piece.id} type={piece.type} />)}
+                </div>
             </div>
-        </div>
-        )
+        );
     }
 }
