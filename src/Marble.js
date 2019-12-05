@@ -69,6 +69,10 @@ export default class Marble extends Component{
             this.setState({
                 imageSource: p2,
             })
+        } else{
+            this.setState({
+                imageSource: empty,
+            })
         }
     }
 
@@ -77,7 +81,7 @@ export default class Marble extends Component{
             maxWidth: "50px",
         };
         if(this.props.type==="1"){
-        	return <img style={marbleStyle} src={p1} alt="Marble" onMouseEnter={this.handleHover} onMouseLeave={this.handleRestore} onClick={this.placeMarble}></img>
+        	return <img style={marbleStyle} src={p1} alt="Marble" onMouseEnter={this.handleHover} onMouseLeave={this.handleRestore} onClick={this.placeMarble} ></img>
         }else if(this.props.type=="2"){
         	return <img style={marbleStyle} src={p2} alt="Marble" onMouseEnter={this.handleHover} onMouseLeave={this.handleRestore} onClick={this.placeMarble}></img>
         }else{
