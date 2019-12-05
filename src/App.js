@@ -110,7 +110,6 @@ export default class App extends Component{
         // BOOLEANS FOR GAME STATE
         player1turn: true,
         timeToPlaceMarble: true,
-        timeToRotateQuadrant: false,
         winnerExists: false,
     };
 
@@ -127,30 +126,28 @@ export default class App extends Component{
   // THE BIG KAHUNA - RUNS WHEN MARBLE IS PLACED ON BOARD
   // called from individual Marble components
   marblePlaced(marbleId, quadrantId){
+    if(this.state.timeToPlaceMarble==true){
+      //Change out marble type in master array
+      let bigArray = [...this.state.masterQuadArray]; //Copy master array of quadrant arrays
+      let quadArray = bigArray[quadrantId]; //Extract desired quadrant array from big array
+      let changedMarble = {...quadArray[marbleId]}; //Extract desired marble from quadrant array
+      if(this.state.player1turn){ //If player1's turn
+        changedMarble.type = '1'; //Change marble to player1 type
+        this.removePlayerMarble(0); //Take marble off player1 arsenal
+      } else { //If player2's turn
+        changedMarble.type = '2'; //Change marble to player2 type
+        this.removePlayerMarble(1); //Take marble off player2 arsenal
+      }
+      quadArray[marbleId] = changedMarble; //Replace old marble with new one
+      bigArray[quadrantId] = quadArray; //Replace old quadrant with new quadrant
+      this.setState({masterQuadArray: bigArray}); //Set state with new master array
 
-    //Change out marble type in master array
-    let bigArray = [...this.state.masterQuadArray]; //Copy master array of quadrant arrays
-    let quadArray = bigArray[quadrantId]; //Extract desired quadrant array from big array
-    let changedMarble = {...quadArray[marbleId]}; //Extract desired marble from quadrant array
-    if(this.state.player1turn){ //If player1's turn
-      changedMarble.type = '1'; //Change marble to player1 type
-      this.removePlayerMarble(0); //Take marble off player1 arsenal
-    } else { //If player2's turn
-      changedMarble.type = '2'; //Change marble to player2 type
-      this.removePlayerMarble(1); //Take marble off player2 arsenal
+      this.setState({
+        timeToPlaceMarble: false,
+      });
+    } else {
+      alert('Time to rotate a quadrant!')
     }
-    quadArray[marbleId] = changedMarble; //Replace old marble with new one
-    bigArray[quadrantId] = quadArray; //Replace old quadrant with new quadrant
-    this.setState({masterQuadArray: bigArray}); //Set state with new master array
-
-    //Change whose turn it is and update text
-    if(this.state.player1turn){ //If player1's turn
-      this.setState({instructionText: this.state.player2name + ", your turn",}); //It is now player2's turn
-    } else { //Otherwise
-      this.setState({instructionText: this.state.player1name + ", your turn",}); //It is now player1's turn
-    }
-    this.setState({player1turn: !this.state.player1turn,}); //Officially change boolean that keeps track of turn
-
     //TODO: change timeToPlaceMarble to false and timeToRotateQuadrant to true to enable rotate buttons
   }
 
@@ -194,75 +191,91 @@ export default class App extends Component{
     //get given quadrant and rotation direction
     // get state of every Marble in the array
 
-   // let direction = rotationDirection.id;
-    let bigArray = [...this.state.masterQuadArray]; 
-    let quadArray = bigArray[quadrantId];
+    if(this.state.timeToPlaceMarble==false){
+    // let direction = rotationDirection.id;
+      let bigArray = [...this.state.masterQuadArray]; 
+      let quadArray = bigArray[quadrantId];
 
-    let new0Marble = {...quadArray[0]}; //Extract desired marble from quadrant array
-    let new1Marble = {...quadArray[1]}; //Extract desired marble from quadrant array
-    let new2Marble = {...quadArray[2]}; //Extract desired marble from quadrant array
-    let new3Marble = {...quadArray[3]}; //Extract desired marble from quadrant array
-    let new4Marble = {...quadArray[4]}; //Extract desired marble from quadrant array
-    let new5Marble = {...quadArray[5]}; //Extract desired marble from quadrant array
-    let new6Marble = {...quadArray[6]}; //Extract desired marble from quadrant array
-    let new7Marble = {...quadArray[7]}; //Extract desired marble from quadrant array
-    let new8Marble = {...quadArray[8]}; //Extract desired marble from quadrant array
+      let new0Marble = {...quadArray[0]}; //Extract desired marble from quadrant array
+      let new1Marble = {...quadArray[1]}; //Extract desired marble from quadrant array
+      let new2Marble = {...quadArray[2]}; //Extract desired marble from quadrant array
+      let new3Marble = {...quadArray[3]}; //Extract desired marble from quadrant array
+      let new4Marble = {...quadArray[4]}; //Extract desired marble from quadrant array
+      let new5Marble = {...quadArray[5]}; //Extract desired marble from quadrant array
+      let new6Marble = {...quadArray[6]}; //Extract desired marble from quadrant array
+      let new7Marble = {...quadArray[7]}; //Extract desired marble from quadrant array
+      let new8Marble = {...quadArray[8]}; //Extract desired marble from quadrant array
 
-    let temp0state = new0Marble.type;
-    let temp1state = new1Marble.type;
-    let temp2state = new2Marble.type;
-    let temp3state = new3Marble.type;
-    let temp4state = new4Marble.type;
-    let temp5state = new5Marble.type;
-    let temp6state = new6Marble.type;
-    let temp7state = new7Marble.type;
-    let temp8state = new8Marble.type;
+      let temp0state = new0Marble.type;
+      let temp1state = new1Marble.type;
+      let temp2state = new2Marble.type;
+      let temp3state = new3Marble.type;
+      let temp4state = new4Marble.type;
+      let temp5state = new5Marble.type;
+      let temp6state = new6Marble.type;
+      let temp7state = new7Marble.type;
+      let temp8state = new8Marble.type;
 
-    if(rotationDirection == "0"){ // ROTATE COUNTER CLOCKWISE
-    	// replace marble state with that of the marble that rotates into its spot
-    	// 0 --> 6
-    	quadArray[0].type = temp6state;
-    	// 1 --> 3
-    	quadArray[1].type = temp3state;
-    	// 2 --> 0
-    	quadArray[2].type = temp0state;
-    	// 3 --> 7
-    	quadArray[3].type = temp7state;
-    	// 4 --> 4
-    	quadArray[4].type = temp4state;
-    	// 5 --> 1
-    	quadArray[5].type = temp1state;
-    	// 6 --> 8
-    	quadArray[6].type = temp8state;
-    	// 7 --> 5
-    	quadArray[7].type = temp5state;
-    	// 8 -->  2
-    	quadArray[8].type = temp2state;
-   
-    } else if(rotationDirection){ // ROTATE CLOCKWISE
-    	// replace marble state with that of the marble that rotates into its spot
-    	// 0 --> 2
-    	quadArray[0].type = temp2state;
-    	// 1 --> 5
-    	quadArray[1].type = temp5state;
-    	// 2 --> 8
-    	quadArray[2].type = temp8state;
-    	// 3 --> 1
-    	quadArray[3].type = temp1state;
-    	// 4 --> 4
-    	quadArray[4].type = temp4state;
-    	// 5 --> 7
-    	quadArray[5].type = temp7state;
-    	// 6 --> 0
-    	quadArray[6].type = temp0state;
-    	// 7 --> 3
-    	quadArray[7].type = temp3state;
-    	// 8 --> 6
-    	quadArray[8].type = temp6state;
+      if(rotationDirection == "0"){ // ROTATE COUNTER CLOCKWISE
+        // replace marble state with that of the marble that rotates into its spot
+        // 0 --> 6
+        quadArray[0].type = temp6state;
+        // 1 --> 3
+        quadArray[1].type = temp3state;
+        // 2 --> 0
+        quadArray[2].type = temp0state;
+        // 3 --> 7
+        quadArray[3].type = temp7state;
+        // 4 --> 4
+        quadArray[4].type = temp4state;
+        // 5 --> 1
+        quadArray[5].type = temp1state;
+        // 6 --> 8
+        quadArray[6].type = temp8state;
+        // 7 --> 5
+        quadArray[7].type = temp5state;
+        // 8 -->  2
+        quadArray[8].type = temp2state;
+    
+      } else if(rotationDirection){ // ROTATE CLOCKWISE
+        // replace marble state with that of the marble that rotates into its spot
+        // 0 --> 2
+        quadArray[0].type = temp2state;
+        // 1 --> 5
+        quadArray[1].type = temp5state;
+        // 2 --> 8
+        quadArray[2].type = temp8state;
+        // 3 --> 1
+        quadArray[3].type = temp1state;
+        // 4 --> 4
+        quadArray[4].type = temp4state;
+        // 5 --> 7
+        quadArray[5].type = temp7state;
+        // 6 --> 0
+        quadArray[6].type = temp0state;
+        // 7 --> 3
+        quadArray[7].type = temp3state;
+        // 8 --> 6
+        quadArray[8].type = temp6state;
 
+      }
+      setTimeout(this.checkForState2, 5);
+
+      //Change whose turn it is and update text
+      if(this.state.player1turn){ //If player1's turn
+        this.setState({instructionText: this.state.player2name + ", your turn",}); //It is now player2's turn
+      } else { //Otherwise
+        this.setState({instructionText: this.state.player1name + ", your turn",}); //It is now player1's turn
+      }
+      this.setState({
+        player1turn: !this.state.player1turn, //Officially change boolean that keeps track of turn
+        timeToPlaceMarble: true,
+      });
+      
+      // call calculateWinner at the end
+    } else {
+      alert("Time to place a marble!")
     }
-    setTimeout(this.checkForState2, 5);
-    // call calculateWinner at the end
   }
 
     // GET MARBLES TO RE-RENDER AFTER BEING ROTATED
