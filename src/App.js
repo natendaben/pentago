@@ -121,7 +121,7 @@ export default class App extends Component{
     this.removePlayerMarble = this.removePlayerMarble.bind(this);
 
     this.rotateQuadrant = this.rotateQuadrant.bind(this);
-   // this.checkForState2 = this.checkForState2.bind(this);
+    this.checkForState2 = this.checkForState2.bind(this);
   }
 
   // THE BIG KAHUNA - RUNS WHEN MARBLE IS PLACED ON BOARD
@@ -261,27 +261,27 @@ export default class App extends Component{
     	quadArray[8].type = temp6state;
 
     }
-    //setTimeout(this.checkForState2, 5);
+    setTimeout(this.checkForState2, 5);
     // call calculateWinner at the end
   }
 
     // GET MARBLES TO RE-RENDER AFTER BEING ROTATED
     // called from rotateQuadrant
-    // checkForState2(){
-    //     if(this.props.type=="1"){
-    //         this.setState({
-    //             imageSource: p1,
-    //         });
-    //     } else if(this.props.type=="2"){
-    //         this.setState({
-    //             imageSource: p2,
-    //         })
-    //     } else{
-    //     	this.setState({
-    //     		imageSource: empty,
-    //     	})
-    //     }
-    // }
+    checkForState2(){
+        if(this.props.type=="1"){
+            this.setState({
+                imageSource: p1,
+            });
+        } else if(this.props.type=="2"){
+            this.setState({
+                imageSource: p2,
+            })
+        } else{
+        	this.setState({
+        		imageSource: empty,
+        	})
+        }
+    }
 
   // CALCULATE WINNER FUNCTION
   // called at the end of rotateQuadrant
