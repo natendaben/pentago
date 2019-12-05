@@ -146,7 +146,11 @@ export default class App extends Component{
         timeToPlaceMarble: false,
       });
     } else {
-      alert('Time to rotate a quadrant!')
+      if(this.state.player1turn){ //If player1's turn
+        alert(this.state.player1name + ", time to rotate a quadrant!")
+      } else { //Otherwise
+        alert(this.state.player2name + ", time to rotate a quadrant!")
+      }
     }
     //TODO: change timeToPlaceMarble to false and timeToRotateQuadrant to true to enable rotate buttons
   }
@@ -274,7 +278,11 @@ export default class App extends Component{
       
       // call calculateWinner at the end
     } else {
-      alert("Time to place a marble!")
+      if(this.state.player1turn){ //If player1's turn
+        alert(this.state.player1name + ", time to place a marble!")
+      } else { //Otherwise
+        alert(this.state.player2name + ", time to place a marble!")
+      }
     }
   }
 
