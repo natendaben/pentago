@@ -105,7 +105,7 @@ export default class App extends Component{
         player2name: "Player 2",
 
         // INSTRUCTIONS AT BOTTOM OF SCREEN
-        instructionText: "Black, your turn first",
+        instructionText: "Player 1, your turn first",
 
         // BOOLEANS FOR GAME STATE
         player1turn: true,
@@ -118,7 +118,7 @@ export default class App extends Component{
     this.updatePlayer2Name = this.updatePlayer2Name.bind(this);
     this.marblePlaced = this.marblePlaced.bind(this);
     this.removePlayerMarble = this.removePlayerMarble.bind(this);
-
+    this.calculateWinner = this.calculateWinner.bind(this);
     this.rotateQuadrant = this.rotateQuadrant.bind(this);
     this.checkForState2 = this.checkForState2.bind(this);
   }
@@ -152,7 +152,9 @@ export default class App extends Component{
         alert(this.state.player2name + ", time to rotate a quadrant!")
       }
     }
-    //TODO: change timeToPlaceMarble to false and timeToRotateQuadrant to true to enable rotate buttons
+    // this.calculateWinner();
+    setTimeout(this.calculateWinner, 250);
+
   }
 
   // REMOVE PLAYER MARBLE FROM ARSENAL AFTER PLACED
@@ -165,6 +167,11 @@ export default class App extends Component{
     this.setState({
       playerArrays: playerArray, //Set state with new master array
     });
+    // this.calculateWinner();
+    // if((playerArray[0].length === 0) && (playerArray[1].length === 0)){
+    //   alert("Looks like all the marbles are gone! Ready for a new game?");
+    //   window.location.reload();
+    // }
   }
 
   // UPDATE PLAYER NAMES
@@ -192,6 +199,7 @@ export default class App extends Component{
   // called when rotate button is pushed 
   // passed to each quadrant as props
   rotateQuadrant(quadrantId, rotationDirection){
+
     //get given quadrant and rotation direction
     // get state of every Marble in the array
 
@@ -284,6 +292,7 @@ export default class App extends Component{
         alert(this.state.player2name + ", time to place a marble!")
       }
     }
+    // this.calculateWinner();
   }
 
     // GET MARBLES TO RE-RENDER AFTER BEING ROTATED
@@ -307,10 +316,401 @@ export default class App extends Component{
   // CALCULATE WINNER FUNCTION
   // called at the end of rotateQuadrant
   calculateWinner(){
-    //add stuff
+      let playerArray = [...this.state.playerArrays]; //Copy master array of players
+      // extract marbles and their states
+      let bigArray = [...this.state.masterQuadArray]; 
+      let quad0 = bigArray[0];
+      let quad1 = bigArray[1];
+      let quad2 = bigArray[2];
+      let quad3 = bigArray[3];
+      let playerType = "0";
+
+      // save all 36 marbles :)
+      let q0m0 = {...quad0[0]};
+      let q0m1 = {...quad0[1]};
+      let q0m2 = {...quad0[2]};
+      let q0m3 = {...quad0[3]};
+      let q0m4 = {...quad0[4]};
+      let q0m5 = {...quad0[5]};
+      let q0m6 = {...quad0[6]};
+      let q0m7 = {...quad0[7]};
+      let q0m8 = {...quad0[8]};
+
+      let q1m0 = {...quad1[0]};
+      let q1m1 = {...quad1[1]};
+      let q1m2 = {...quad1[2]};
+      let q1m3 = {...quad1[3]};
+      let q1m4 = {...quad1[4]};
+      let q1m5 = {...quad1[5]};
+      let q1m6 = {...quad1[6]};
+      let q1m7 = {...quad1[7]};
+      let q1m8 = {...quad1[8]};
+
+      let q2m0 = {...quad2[0]};
+      let q2m1 = {...quad2[1]};
+      let q2m2 = {...quad2[2]};
+      let q2m3 = {...quad2[3]};
+      let q2m4 = {...quad2[4]};
+      let q2m5 = {...quad2[5]};
+      let q2m6 = {...quad2[6]};
+      let q2m7 = {...quad2[7]};
+      let q2m8 = {...quad2[8]};
+
+      let q3m0 = {...quad3[0]};
+      let q3m1 = {...quad3[1]};
+      let q3m2 = {...quad3[2]};
+      let q3m3 = {...quad3[3]};
+      let q3m4 = {...quad3[4]};
+      let q3m5 = {...quad3[5]};
+      let q3m6 = {...quad3[6]};
+      let q3m7 = {...quad3[7]};
+      let q3m8 = {...quad3[8]};
+
+      // who's turn is it
+      if(this.state.player1turn){
+        playerType = "1";
+      } else{
+        playerType = "2";
+      }
+
+      // check each scenario
+      // HORIZONTAL WINS
+      if((q0m0.type  === playerType) && (q0m1.type === playerType) && (q0m2.type === playerType) && (q1m0.type === playerType) && (q1m1.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m1.type  === playerType) && (q0m2.type === playerType) && (q1m0.type === playerType) && (q1m1.type === playerType) && (q1m2.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m3.type  === playerType) && (q0m4.type === playerType) && (q0m5.type === playerType) && (q1m3.type === playerType) && (q1m4.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m4.type  === playerType) && (q0m5.type === playerType) && (q1m3.type === playerType) && (q1m4.type === playerType) && (q1m5.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m6.type  === playerType) && (q0m7.type === playerType) && (q0m8.type === playerType) && (q1m6.type === playerType) && (q1m7.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m7.type  === playerType) && (q0m8.type === playerType) && (q1m6.type === playerType) && (q1m7.type === playerType) && (q1m8.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m0.type  === playerType) && (q2m1.type === playerType) && (q2m2.type === playerType) && (q3m0.type === playerType) && (q3m1.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m1.type  === playerType) && (q2m2.type === playerType) && (q3m0.type === playerType) && (q3m1.type === playerType) && (q3m2.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m3.type  === playerType) && (q2m4.type === playerType) && (q2m5.type === playerType) && (q3m3.type === playerType) && (q3m4.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m4.type  === playerType) && (q2m5.type === playerType) && (q3m3.type === playerType) && (q3m4.type === playerType) && (q3m5.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m6.type  === playerType) && (q2m7.type === playerType) && (q2m8.type === playerType) && (q3m6.type === playerType) && (q3m7.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m7.type  === playerType) && (q2m8.type === playerType) && (q3m6.type === playerType) && (q3m7.type === playerType) && (q3m8.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      }
+      // VERTICAL WINS
+      else if((q0m0.type  === playerType) && (q0m3.type === playerType) && (q0m6.type === playerType) && (q2m0.type === playerType) && (q2m3.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m3.type  === playerType) && (q0m6.type === playerType) && (q2m0.type === playerType) && (q2m3.type === playerType) && (q2m6.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m1.type  === playerType) && (q0m4.type === playerType) && (q0m7.type === playerType) && (q2m1.type === playerType) && (q2m4.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m4.type  === playerType) && (q0m7.type === playerType) && (q2m1.type === playerType) && (q2m4.type === playerType) && (q2m7.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m2.type  === playerType) && (q0m5.type === playerType) && (q0m8.type === playerType) && (q2m2.type === playerType) && (q2m5.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m5.type  === playerType) && (q0m8.type === playerType) && (q2m2.type === playerType) && (q2m5.type === playerType) && (q2m8.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q1m0.type  === playerType) && (q1m3.type === playerType) && (q1m6.type === playerType) && (q3m0.type === playerType) && (q3m3.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q1m3.type  === playerType) && (q1m6.type === playerType) && (q3m0.type === playerType) && (q3m3.type === playerType) && (q3m6.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q1m1.type  === playerType) && (q1m4.type === playerType) && (q1m7.type === playerType) && (q3m1.type === playerType) && (q3m4.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q1m4.type  === playerType) && (q1m7.type === playerType) && (q3m1.type === playerType) && (q3m4.type === playerType) && (q3m7.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q1m2.type  === playerType) && (q1m5.type === playerType) && (q1m8.type === playerType) && (q3m2.type === playerType) && (q3m5.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q1m5.type  === playerType) && (q1m8.type === playerType) && (q3m2.type === playerType) && (q3m5.type === playerType) && (q3m8.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      }
+      // DIAGONAL WINS
+      else if((q2m3.type  === playerType) && (q2m1.type === playerType) && (q0m8.type === playerType) && (q1m3.type === playerType) && (q1m1.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m6.type  === playerType) && (q2m4.type === playerType) && (q2m2.type === playerType) && (q1m6.type === playerType) && (q1m4.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m4.type  === playerType) && (q2m2.type === playerType) && (q1m6.type === playerType) && (q1m4.type === playerType) && (q1m2.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q2m7.type  === playerType) && (q2m5.type === playerType) && (q3m0.type === playerType) && (q1m7.type === playerType) && (q1m5.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m3.type  === playerType) && (q0m7.type === playerType) && (q0m2.type === playerType) && (q3m3.type === playerType) && (q3m7.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m0.type  === playerType) && (q0m4.type === playerType) && (q0m8.type === playerType) && (q3m0.type === playerType) && (q3m4.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m4.type  === playerType) && (q0m8.type === playerType) && (q3m0.type === playerType) && (q3m4.type === playerType) && (q3m8.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+        // start new game?
+      } else if((q0m1.type  === playerType) && (q0m5.type === playerType) && (q1m6.type === playerType) && (q3m1.type === playerType) && (q3m5.type === playerType)){
+        // player wins!
+        if(playerType === "1"){
+          alert(this.state.player1name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }else{
+          alert(this.state.player2name + ", you win! Ready for a new game?");
+          window.location.reload();
+        }
+      }
+      // if none of those pass
+      else{
+        // continue game!
+        if((playerArray[0].length === 0) && (playerArray[1].length === 0)){
+          alert("Looks like all the marbles are gone! Ready for a new game?");
+          window.location.reload();
+        }
+      }
   }
 
   render(){
+    alert("Welcome to Pentago! Enter in both player's names, and get your brain ready! Try and get FIVE IN A ROW. Each turn, you are required to place one marble anywhere, then rotate any of the quadrants once.");
     var gridLayout = {
       display: 'grid',
       gridTemplateColumns: '1fr auto 1fr',
