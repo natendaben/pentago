@@ -108,6 +108,8 @@ export default class App extends Component{
         instructionText: "Player 1, your turn first",
 
         // BOOLEANS FOR GAME STATE
+
+        firstAlertShown: false,
         player1turn: true,
         timeToPlaceMarble: true,
         winnerExists: false,
@@ -121,6 +123,7 @@ export default class App extends Component{
     this.calculateWinner = this.calculateWinner.bind(this);
     this.rotateQuadrant = this.rotateQuadrant.bind(this);
     this.checkForState2 = this.checkForState2.bind(this);
+    this.dismissAlert = this.dismissAlert.bind(this);
   }
 
   // THE BIG KAHUNA - RUNS WHEN MARBLE IS PLACED ON BOARD
@@ -709,8 +712,15 @@ export default class App extends Component{
       }
   }
 
+  dismissAlert(){
+    this.setState({
+      firstAlertShown: true,
+    });
+  }
+  // componentDidMount(){
+  //   alert("Welcome to Pentago! Enter in both player's names, and get your brain ready! Try and get FIVE IN A ROW. Each turn, you are required to place one marble anywhere, then rotate any of the quadrants once.");
+  // }
   render(){
-    alert("Welcome to Pentago! Enter in both player's names, and get your brain ready! Try and get FIVE IN A ROW. Each turn, you are required to place one marble anywhere, then rotate any of the quadrants once.");
     var gridLayout = {
       display: 'grid',
       gridTemplateColumns: '1fr auto 1fr',
@@ -750,23 +760,95 @@ export default class App extends Component{
       padding: "3%",
       marginTop: "8%",
     };
+    var alertBg = {
+      height: "100vh",
+      width: "100vw",
+      background: "hsla(323, 100%, 100%, 0.6)",
+      position: "absolute",
+      zIndex: "15",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    }
+    var alertStyle = {
+      background: "white",
+      // width: "50%",
+      // height: "60%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      border: "3px solid black",
+      borderRadius: "15px",
+      padding: "2% 5% 2% 5%",
+    }
+    var hStyle = {
+      fontFamily: 'Baskerville, "Hoefler Text", Garamond, "Times New Roman", serif',
+      fontSize: "200%",
+      fontWeight: "bold",
+      textAlign: "center",
+      margin: "5% 0% 2% 0%",
+    }
+    var pStyle = {
+      fontFamily: 'Baskerville, "Hoefler Text", Garamond, "Times New Roman", serif',
+      textAlign: "center",
+      margin: "0% 0% 2% 0%",
+      fontSize: "125%",
+    }
+    var buttonStyle = {
+      fontFamily: 'Baskerville, "Hoefler Text", Garamond, "Times New Roman", serif',
+      textAlign: "center",
+      fontSize: "125%",
+      border: "2px solid black",
+      borderRadius: "1%",
+      background: "hsla(323, 0%, 90%, 1)",
+      margin: "0% 0% 6% 0%",
+    }
 
-    return (
-      <div style={flexLayout}>
-        <h1 style={headingStyle}>PENTAGO</h1>
-        <div style={gridLayout}>
-          <Player name={this.state.player1name} player='1' pieces={this.state.playerArrays[0]} nameChange={this.updatePlayer1Name}/>
-          <div style={boardStyle}>
-                <Quadrant dotArray={this.state.masterQuadArray[0]} id={0} position="topLeft" margin="0% 2.5% 2.5% 0%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
-                <Quadrant dotArray={this.state.masterQuadArray[1]} id={1} position="topRight" margin="0% 0% 2.5% 2.5%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
-                <Quadrant dotArray={this.state.masterQuadArray[2]} id={2} position="bottomLeft" margin="2.5% 2.5% 0% 0%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
-                <Quadrant dotArray={this.state.masterQuadArray[3]} id={3} position="bottomRight" margin="2.5% 0% 0% 2.5%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+    if(this.state.firstAlertShown==false){
+      return (
+        <div>
+          <div style={alertBg}>
+            <div style={alertStyle}>
+              <p style={hStyle}>Welcome to Pentago!</p> 
+              <p style={pStyle}>Enter in both player's names, and get your brain ready! Try and get FIVE IN A ROW.</p><p style={pStyle}>Each turn, you are required to place one marble anywhere, then rotate any of the quadrants once.</p>
+              <button style={buttonStyle} onClick={this.dismissAlert}>Okay, let's go!</button>
+            </div>
           </div>
-          <Player name={this.state.player2name} player='2' pieces={this.state.playerArrays[1]} nameChange={this.updatePlayer2Name}/>
+          <div style={flexLayout}>
+            <h1 style={headingStyle}>PENTAGO</h1>
+            <div style={gridLayout}>
+              <Player name={this.state.player1name} player='1' pieces={this.state.playerArrays[0]} nameChange={this.updatePlayer1Name}/>
+              <div style={boardStyle}>
+                    <Quadrant dotArray={this.state.masterQuadArray[0]} id={0} position="topLeft" margin="0% 2.5% 2.5% 0%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                    <Quadrant dotArray={this.state.masterQuadArray[1]} id={1} position="topRight" margin="0% 0% 2.5% 2.5%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                    <Quadrant dotArray={this.state.masterQuadArray[2]} id={2} position="bottomLeft" margin="2.5% 2.5% 0% 0%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                    <Quadrant dotArray={this.state.masterQuadArray[3]} id={3} position="bottomRight" margin="2.5% 0% 0% 2.5%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+              </div>
+              <Player name={this.state.player2name} player='2' pieces={this.state.playerArrays[1]} nameChange={this.updatePlayer2Name}/>
+            </div>
+            <h2 style={heading2Style}>{this.state.instructionText}</h2>
+          </div>
         </div>
-        <h2 style={heading2Style}>{this.state.instructionText}</h2>
-  
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div style={flexLayout}>
+          <h1 style={headingStyle}>PENTAGO</h1>
+          <div style={gridLayout}>
+            <Player name={this.state.player1name} player='1' pieces={this.state.playerArrays[0]} nameChange={this.updatePlayer1Name}/>
+            <div style={boardStyle}>
+                  <Quadrant dotArray={this.state.masterQuadArray[0]} id={0} position="topLeft" margin="0% 2.5% 2.5% 0%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                  <Quadrant dotArray={this.state.masterQuadArray[1]} id={1} position="topRight" margin="0% 0% 2.5% 2.5%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                  <Quadrant dotArray={this.state.masterQuadArray[2]} id={2} position="bottomLeft" margin="2.5% 2.5% 0% 0%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+                  <Quadrant dotArray={this.state.masterQuadArray[3]} id={3} position="bottomRight" margin="2.5% 0% 0% 2.5%" onPlaceMarble={this.marblePlaced} rotateQuadrant={this.rotateQuadrant}/>
+            </div>
+            <Player name={this.state.player2name} player='2' pieces={this.state.playerArrays[1]} nameChange={this.updatePlayer2Name}/>
+          </div>
+          <h2 style={heading2Style}>{this.state.instructionText}</h2>
+    
+        </div>
+      );
+    }
   }
 }
