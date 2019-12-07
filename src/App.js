@@ -156,7 +156,7 @@ export default class App extends Component{
       }
     }
     // this.calculateWinner();
-    setTimeout(this.calculateWinner, 250);
+    //setTimeout(this.calculateWinner(1), 250);
 
   }
 
@@ -205,9 +205,12 @@ export default class App extends Component{
 
     //get given quadrant and rotation direction
     // get state of every Marble in the array
+        // this.calculateWinner("1");
+        // this.calculateWinner("2");
 
     if(this.state.timeToPlaceMarble==false){
     // let direction = rotationDirection.id;
+
       let bigArray = [...this.state.masterQuadArray]; 
       let quadArray = bigArray[quadrantId];
 
@@ -278,8 +281,10 @@ export default class App extends Component{
 
       //Change whose turn it is and update text
       if(this.state.player1turn){ //If player1's turn
+        this.calculateWinner();
         this.setState({instructionText: this.state.player2name + ", your turn",}); //It is now player2's turn
       } else { //Otherwise
+        this.calculateWinner();
         this.setState({instructionText: this.state.player1name + ", your turn",}); //It is now player1's turn
       }
       this.setState({
@@ -295,7 +300,10 @@ export default class App extends Component{
         alert(this.state.player2name + ", time to place a marble!")
       }
     }
-    // this.calculateWinner();
+    this.calculateWinner("1");
+    this.calculateWinner("2");
+    // setTimeout(this.calculateWinner("1"), 1000);
+    // setTimeout(this.calculateWinner("2"), 1000);
   }
 
     // GET MARBLES TO RE-RENDER AFTER BEING ROTATED
@@ -318,7 +326,7 @@ export default class App extends Component{
 
   // CALCULATE WINNER FUNCTION
   // called at the end of rotateQuadrant
-  calculateWinner(){
+  calculateWinner(playerNum){
       let playerArray = [...this.state.playerArrays]; //Copy master array of players
       // extract marbles and their states
       let bigArray = [...this.state.masterQuadArray]; 
@@ -326,7 +334,7 @@ export default class App extends Component{
       let quad1 = bigArray[1];
       let quad2 = bigArray[2];
       let quad3 = bigArray[3];
-      let playerType = "0";
+      let playerType = playerNum;
 
       // save all 36 marbles :)
       let q0m0 = {...quad0[0]};
@@ -370,17 +378,17 @@ export default class App extends Component{
       let q3m8 = {...quad3[8]};
 
       // who's turn is it
-      if(this.state.player1turn){
-        playerType = "1";
-      } else{
-        playerType = "2";
-      }
+      // if(this.state.player1turn){
+      //   playerType = "1";
+      // } else{
+      //   playerType = "2";
+      // }
 
       // check each scenario
       // HORIZONTAL WINS
       if((q0m0.type  === playerType) && (q0m1.type === playerType) && (q0m2.type === playerType) && (q1m0.type === playerType) && (q1m1.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m0.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -390,7 +398,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m1.type  === playerType) && (q0m2.type === playerType) && (q1m0.type === playerType) && (q1m1.type === playerType) && (q1m2.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m1.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -400,7 +408,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m3.type  === playerType) && (q0m4.type === playerType) && (q0m5.type === playerType) && (q1m3.type === playerType) && (q1m4.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m3.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -410,7 +418,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m4.type  === playerType) && (q0m5.type === playerType) && (q1m3.type === playerType) && (q1m4.type === playerType) && (q1m5.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m4.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -420,7 +428,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m6.type  === playerType) && (q0m7.type === playerType) && (q0m8.type === playerType) && (q1m6.type === playerType) && (q1m7.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m6.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -430,7 +438,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m7.type  === playerType) && (q0m8.type === playerType) && (q1m6.type === playerType) && (q1m7.type === playerType) && (q1m8.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m7.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -440,7 +448,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m0.type  === playerType) && (q2m1.type === playerType) && (q2m2.type === playerType) && (q3m0.type === playerType) && (q3m1.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m0.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -450,7 +458,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m1.type  === playerType) && (q2m2.type === playerType) && (q3m0.type === playerType) && (q3m1.type === playerType) && (q3m2.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m1.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -460,7 +468,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m3.type  === playerType) && (q2m4.type === playerType) && (q2m5.type === playerType) && (q3m3.type === playerType) && (q3m4.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m3.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -470,7 +478,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m4.type  === playerType) && (q2m5.type === playerType) && (q3m3.type === playerType) && (q3m4.type === playerType) && (q3m5.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m4.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -480,7 +488,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m6.type  === playerType) && (q2m7.type === playerType) && (q2m8.type === playerType) && (q3m6.type === playerType) && (q3m7.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m6.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -490,7 +498,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m7.type  === playerType) && (q2m8.type === playerType) && (q3m6.type === playerType) && (q3m7.type === playerType) && (q3m8.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m7.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -502,7 +510,7 @@ export default class App extends Component{
       // VERTICAL WINS
       else if((q0m0.type  === playerType) && (q0m3.type === playerType) && (q0m6.type === playerType) && (q2m0.type === playerType) && (q2m3.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m0.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -512,7 +520,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m3.type  === playerType) && (q0m6.type === playerType) && (q2m0.type === playerType) && (q2m3.type === playerType) && (q2m6.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m3.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -522,7 +530,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m1.type  === playerType) && (q0m4.type === playerType) && (q0m7.type === playerType) && (q2m1.type === playerType) && (q2m4.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m1.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -532,7 +540,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m4.type  === playerType) && (q0m7.type === playerType) && (q2m1.type === playerType) && (q2m4.type === playerType) && (q2m7.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m4.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -542,7 +550,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m2.type  === playerType) && (q0m5.type === playerType) && (q0m8.type === playerType) && (q2m2.type === playerType) && (q2m5.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m2.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -552,7 +560,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m5.type  === playerType) && (q0m8.type === playerType) && (q2m2.type === playerType) && (q2m5.type === playerType) && (q2m8.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m5.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -562,7 +570,7 @@ export default class App extends Component{
         // start new game?
       } else if((q1m0.type  === playerType) && (q1m3.type === playerType) && (q1m6.type === playerType) && (q3m0.type === playerType) && (q3m3.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q1m0.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -572,7 +580,7 @@ export default class App extends Component{
         // start new game?
       } else if((q1m3.type  === playerType) && (q1m6.type === playerType) && (q3m0.type === playerType) && (q3m3.type === playerType) && (q3m6.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q1m3.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -582,7 +590,7 @@ export default class App extends Component{
         // start new game?
       } else if((q1m1.type  === playerType) && (q1m4.type === playerType) && (q1m7.type === playerType) && (q3m1.type === playerType) && (q3m4.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q1m1.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -592,7 +600,7 @@ export default class App extends Component{
         // start new game?
       } else if((q1m4.type  === playerType) && (q1m7.type === playerType) && (q3m1.type === playerType) && (q3m4.type === playerType) && (q3m7.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q1m4.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -602,7 +610,7 @@ export default class App extends Component{
         // start new game?
       } else if((q1m2.type  === playerType) && (q1m5.type === playerType) && (q1m8.type === playerType) && (q3m2.type === playerType) && (q3m5.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q1m2.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -612,7 +620,7 @@ export default class App extends Component{
         // start new game?
       } else if((q1m5.type  === playerType) && (q1m8.type === playerType) && (q3m2.type === playerType) && (q3m5.type === playerType) && (q3m8.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q1m5.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -624,7 +632,7 @@ export default class App extends Component{
       // DIAGONAL WINS
       else if((q2m3.type  === playerType) && (q2m1.type === playerType) && (q0m8.type === playerType) && (q1m3.type === playerType) && (q1m1.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m3.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -634,7 +642,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m6.type  === playerType) && (q2m4.type === playerType) && (q2m2.type === playerType) && (q1m6.type === playerType) && (q1m4.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m6.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -644,7 +652,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m4.type  === playerType) && (q2m2.type === playerType) && (q1m6.type === playerType) && (q1m4.type === playerType) && (q1m2.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m4.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -654,7 +662,7 @@ export default class App extends Component{
         // start new game?
       } else if((q2m7.type  === playerType) && (q2m5.type === playerType) && (q3m0.type === playerType) && (q1m7.type === playerType) && (q1m5.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q2m7.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -664,7 +672,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m3.type  === playerType) && (q0m7.type === playerType) && (q0m2.type === playerType) && (q3m3.type === playerType) && (q3m7.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m3.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -674,7 +682,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m0.type  === playerType) && (q0m4.type === playerType) && (q0m8.type === playerType) && (q3m0.type === playerType) && (q3m4.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m0.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -684,7 +692,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m4.type  === playerType) && (q0m8.type === playerType) && (q3m0.type === playerType) && (q3m4.type === playerType) && (q3m8.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m4.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
@@ -694,7 +702,7 @@ export default class App extends Component{
         // start new game?
       } else if((q0m1.type  === playerType) && (q0m5.type === playerType) && (q1m6.type === playerType) && (q3m1.type === playerType) && (q3m5.type === playerType)){
         // player wins!
-        if(playerType === "1"){
+        if(q0m1.type === "1"){
           alert(this.state.player1name + ", you win! Ready for a new game?");
           window.location.reload();
         }else{
