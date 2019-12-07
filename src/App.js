@@ -121,6 +121,7 @@ export default class App extends Component{
     this.marblePlaced = this.marblePlaced.bind(this);
     this.removePlayerMarble = this.removePlayerMarble.bind(this);
     this.calculateWinner = this.calculateWinner.bind(this);
+    this.helpCalculate = this.helpCalculate.bind(this);
     this.rotateQuadrant = this.rotateQuadrant.bind(this);
     this.checkForState2 = this.checkForState2.bind(this);
     this.dismissAlert = this.dismissAlert.bind(this);
@@ -155,8 +156,6 @@ export default class App extends Component{
         alert(this.state.player2name + ", time to rotate a quadrant!")
       }
     }
-    // this.calculateWinner();
-    //setTimeout(this.calculateWinner(1), 250);
 
   }
 
@@ -170,11 +169,6 @@ export default class App extends Component{
     this.setState({
       playerArrays: playerArray, //Set state with new master array
     });
-    // this.calculateWinner();
-    // if((playerArray[0].length === 0) && (playerArray[1].length === 0)){
-    //   alert("Looks like all the marbles are gone! Ready for a new game?");
-    //   window.location.reload();
-    // }
   }
 
   // UPDATE PLAYER NAMES
@@ -205,9 +199,6 @@ export default class App extends Component{
 
     //get given quadrant and rotation direction
     // get state of every Marble in the array
-        // this.calculateWinner("1");
-        // this.calculateWinner("2");
-
     if(this.state.timeToPlaceMarble==false){
     // let direction = rotationDirection.id;
 
@@ -281,10 +272,10 @@ export default class App extends Component{
 
       //Change whose turn it is and update text
       if(this.state.player1turn){ //If player1's turn
-        this.calculateWinner();
+        //this.calculateWinner();
         this.setState({instructionText: this.state.player2name + ", your turn",}); //It is now player2's turn
       } else { //Otherwise
-        this.calculateWinner();
+        //this.calculateWinner();
         this.setState({instructionText: this.state.player1name + ", your turn",}); //It is now player1's turn
       }
       this.setState({
@@ -300,10 +291,21 @@ export default class App extends Component{
         alert(this.state.player2name + ", time to place a marble!")
       }
     }
-    this.calculateWinner("1");
-    this.calculateWinner("2");
-    // setTimeout(this.calculateWinner("1"), 1000);
-    // setTimeout(this.calculateWinner("2"), 1000);
+
+    setTimeout(
+      function() {
+          this.helpCalculate("1");
+      }
+      .bind(this),
+      500
+    );
+    setTimeout(
+      function() {
+          this.helpCalculate("2");
+      }
+      .bind(this),
+      500
+    );
   }
 
     // GET MARBLES TO RE-RENDER AFTER BEING ROTATED
@@ -322,6 +324,10 @@ export default class App extends Component{
         		imageSource: empty,
         	})
         }
+    }
+
+    helpCalculate(playerNum){
+      this.calculateWinner(playerNum);
     }
 
   // CALCULATE WINNER FUNCTION
@@ -376,13 +382,6 @@ export default class App extends Component{
       let q3m6 = {...quad3[6]};
       let q3m7 = {...quad3[7]};
       let q3m8 = {...quad3[8]};
-
-      // who's turn is it
-      // if(this.state.player1turn){
-      //   playerType = "1";
-      // } else{
-      //   playerType = "2";
-      // }
 
       // check each scenario
       // HORIZONTAL WINS
