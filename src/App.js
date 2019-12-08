@@ -149,6 +149,21 @@ export default class App extends Component{
       this.setState({
         timeToPlaceMarble: false,
       });
+
+      setTimeout(
+        function() {
+            this.helpCalculate("1");
+        }
+        .bind(this),
+        500
+      );
+      setTimeout(
+        function() {
+            this.helpCalculate("2");
+        }
+        .bind(this),
+        500
+      );
     } else {
       if(this.state.player1turn){ //If player1's turn
         alert(this.state.player1name + ", time to rotate a quadrant!")
@@ -283,7 +298,6 @@ export default class App extends Component{
         timeToPlaceMarble: true,
       });
       
-      // call calculateWinner at the end
     } else {
       if(this.state.player1turn){ //If player1's turn
         alert(this.state.player1name + ", time to place a marble!")
