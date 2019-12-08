@@ -800,9 +800,10 @@ export default class App extends Component{
       textAlign: "center",
       fontSize: "125%",
       border: "2px solid black",
-      borderRadius: "1%",
+      borderRadius: "5px",
       background: "hsla(323, 0%, 90%, 1)",
       margin: "0% 0% 6% 0%",
+      padding: "10px",
     }
 
     if(this.state.firstAlertShown==false){
